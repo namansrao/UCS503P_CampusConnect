@@ -1,0 +1,176 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{setspace}
+
+\setstretch{1.15}
+
+\title{\textbf{Campus Connect: Fostering Meaningful Micro-Communities in Higher Education} \\ \large Project Proposal for UCS503P}
+\author{Submitted to: Ms. Paramveer Sidhu \\ 
+Thapar Institute of Engineering and Technology \\ \\ 
+Namanpartap Singh Sarao (1024030706), CSED \\ 
+Aadeshwar Singh Dhillon (1024030704), CSED \\ 
+Praney Sharma (1024030705), CSED}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Higher-order goal} 
+This project aims to improve sustainable student well-being and campus engagement by reducing the social friction required to discover relevant peers and events. While the topic is broader than any single university department, the immediate engineering objective is to translate targeted social networking and public campus service delivery into a measurable, deployable software solution.
+
+\section{Time-to-value} 
+We will deliver meaningful increments quickly by prototyping the core user workflow (interest-based event feed and matching) and validating it with users within a short iteration window. We will prioritize fast feedback over perfection by using weekly iterations (and targeting CI-backed automation early) to reduce release friction. Success is defined by what can be delivered and measured in the first iteration, then improved based on user feedback.
+
+\section{Problem Statement} 
+Students in higher education institutions face isolation and uncertainty when attempting to find their specific niche. Common pain points include:
+\begin{itemize}
+    \item \textbf{Fragmentation:} Event announcements are made via multiple channels (posters, social media, mass emails), causing lost context.
+    \item \textbf{Low transparency:} Students cannot easily see who is attending events or find peers with highly specific shared interests.
+    \item \textbf{Slow coordination:} Campus societies lack a unified, trackable workflow to reach their target audience effectively.
+    \item \textbf{Poor data quality:} General social media lacks verified student status, leading to spam and safety concerns.
+\end{itemize}
+\textbf{Why this matters now (contextual relevance):} In a densely populated educational setting, even small algorithmic matching improvements can noticeably reduce social isolation and increase campus involvement.
+
+\section{Proposed Solution} 
+
+\subsection{Overview} 
+Build a web/mobile-based ``Campus Connect'' system with the following components:
+\begin{itemize}
+    \item \textbf{Student profile portal:} Users submit their details, department, and a curated list of interests.
+    \item \textbf{Automated triage:} Basic interest matching and intent alignment checks.
+    \item \textbf{Society workflow:} Admins assign events to relevant categories and update details.
+    \item \textbf{Status transparency:} Students track RSVPs and receive notifications for mutual matches.
+    \item \textbf{Admin/ops dashboard:} Performance summaries (event engagement, active user metrics).
+\end{itemize}
+
+\subsection{Core workflow} 
+\begin{enumerate}
+    \item Student creates a profile with verified university credentials.
+    \item System validates completeness and suggests possible peer matches (lightweight similarity on text/category).
+    \item Society staff post an event (Draft $\rightarrow$ Published $\rightarrow$ Completed).
+    \item Student views recommended events and matches based on shared tags.
+\end{enumerate}
+
+\subsection{Operational constraints for an educational, tier-2/3 setting} 
+\begin{itemize}
+    \item Keep the solution usable on low-to-mid range devices via responsive web design.
+    \item Avoid dependence on advanced research algorithms; focus on workflow, automation, and system correctness.
+    \item Design for deployability using common web hosting and managed databases.
+\end{itemize}
+
+\section{Solution Approach} 
+This is an engineering course project, so we focus on scalable administrative and workflow aspects rather than novel algorithm research.
+
+\subsection{Matching/Quality assistance} 
+Peer and event recommendation will be heuristic-based:
+\begin{itemize}
+    \item Normalize text (category + short interest keywords).
+    \item Use a simple similarity measure (e.g., token overlap with threshold) without claiming state-of-the-art.
+    \item Show top candidate matches to the user for decision; never fully auto-connect users without mutual opt-in.
+\end{itemize}
+
+\subsection{Web architecture} 
+A typical 3-tier web architecture:
+\begin{itemize}
+    \item \textbf{Frontend:} responsive UI for students and society staff (feed pages, submission forms, dashboard).
+    \item \textbf{Backend API:} authentication, profile submission, swiping/matching logic, event creation.
+    \item \textbf{Database:} store users, events, match history, metadata.
+\end{itemize}
+
+\subsection{CI/CD and fast delivery enabler} 
+CI/CD will be used to:
+\begin{itemize}
+    \item Automatically build and run tests on every change.
+    \item Produce repeatable deployment artifacts to staging.
+    \item Enable safe and frequent releases of incremental features.
+\end{itemize}
+
+\section{Evaluation Criterion} 
+We define success using measurable metrics tied to the core workflow.
+
+\subsection{Primary evaluation metric} 
+Time-to-discovery (TTD): time between profile completion and the first meaningful event RSVP or peer match interaction.
+\begin{itemize}
+    \item \textbf{Target:} Median TTD $<$ 2 hours during pilot window.
+    \item \textbf{Attribution:} Measured from database timestamps (profile creation vs. first RSVP/Like).
+\end{itemize}
+
+\subsection{Secondary evaluation metrics} 
+\begin{itemize}
+    \item \textbf{Engagement reduction:} Reduce time spent searching for events compared to baseline process (even if baseline is collected via survey).
+    \item \textbf{Match rate:} Percentage of proposed connections that result in a mutual opt-in.
+    \item \textbf{Reliability:} Availability of staging/production for login and submission during business hours (e.g., $>99\%$ uptime in pilot).
+\end{itemize}
+
+\subsection{Pilot validation plan} 
+\begin{itemize}
+    \item Recruit 10-20 pilot users (students) and 3-5 staff roles (society simulation if real staff unavailable).
+    \item Compare metrics before/after within the iteration window by logging baseline estimates via short interviews or existing process observations.
+\end{itemize}
+
+\section{Scalability} 
+The proposition should scale in both theoretical and practical senses.
+\begin{enumerate}
+    \item \textbf{Scalable (theoretically):} The system should support growth in the number of events and concurrent active users by:
+    \begin{itemize}
+        \item decoupling components (frontend/backend),
+        \item enabling pagination and indexing for common queries,
+        \item using stateless API design.
+    \end{itemize}
+    \item \textbf{Operationally deployable (practically):} The system should run on common web hosting:
+    \begin{itemize}
+        \item managed database,
+        \item containerized or platform-hosted deployment,
+        \item CI/CD pipeline for staging/production.
+    \end{itemize}
+\end{enumerate}
+
+\section{Engine availability heuristic} 
+A mature set of ``engines'' (tooling/services) is available to implement this as a web-based project:
+\begin{itemize}
+    \item Web framework for REST APIs and templated/reactive pages.
+    \item Managed relational or document database.
+    \item Authentication approach (token-based or session-based).
+    \item Test framework for unit/integration tests.
+    \item CI runner and staging deployment target.
+\end{itemize}
+We will use these mature components to focus on workflow design, correctness, and measurement rather than inventing new infrastructure.
+
+\section{Project scope and deliverables} 
+
+\subsection{Initial deliverable} 
+\begin{itemize}
+    \item Student profile form + verification logic
+    \item Staff workflow: create events and assign tags
+    \item Feed page: view recommended events and peers
+    \item Basic logging and timestamps for TTD measurement
+    \item CI: build + backend unit tests + linting
+    \item CD to staging with a single command or pipeline job
+\end{itemize}
+
+\subsection{Subsequent deliverables} 
+\begin{itemize}
+    \item Lightweight peer recommendations with mutual opt-in logic
+    \item Notification layer (in-app notifications)
+    \item Admin dashboard for metrics and active user tracking
+    \item Improved search/filtering and indexed queries for scale readiness
+\end{itemize}
+
+\section{Risks and mitigations} 
+\begin{itemize}
+    \item \textbf{Data privacy / consent:} Minimize collected data; keep profiles restricted to verified users; store only what is needed.
+    \item \textbf{Society adoption:} Provide an easy UI for event creation; keep workflow steps minimal; include shortcuts.
+    \item \textbf{Evaluation measurement ambiguity:} Instrument timestamps and define clear status transitions before development begins.
+    \item \textbf{Operational issues in pilot:} Use staging early; ensure CI/CD produces repeatable deployments.
+\end{itemize}
+
+\section{Summary} 
+This project proposes a deployable web platform to reduce social friction and improve event discovery in a university context. It meets the course criteria by emphasizing time-to-value through rapid iterations, implementing CI/CD to support frequent safe releases, and using measurable evaluation criteria (especially time-to-discovery). It remains focused on engineering workflow and scalability readiness rather than research-driven novelty.
+
+\end{document}
